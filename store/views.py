@@ -70,15 +70,9 @@ def create_checkout_session_for_order(order):
         'cancel_url': settings.SITE_URL.rstrip('/') + reverse('cancel'),
     }
     
-    # Add discount if available
+    # Add discount if available (requires stripe_coupon_id)
     if order.discount and order.discount.stripe_coupon_id:
         session_params['discounts'] = [{'coupon': order.discount.stripe_coupon_id}]
-    elif order.discount:
-        # Create a discount in the session
-        session_params['line_items'][0]['price_data']['unit_amount'] = int(
-            session_params['line_items'][0]['price_data']['unit_amount'] * 
-            (1 - order.discount.percent_off / 100)
-        )
     
     # Add tax if available
     if order.tax and order.tax.stripe_tax_rate_id:
