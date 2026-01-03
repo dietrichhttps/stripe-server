@@ -14,11 +14,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project files
 COPY . .
 
+# Copy and make entrypoint script executable
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
 # Collect static files (if needed)
 # RUN python manage.py collectstatic --noinput
 
 # Expose port
 EXPOSE 8000
 
-# Run migrations and start server
-CMD python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+# Run entrypoint script
+ENTRYPOINT ["/docker-entrypoint.sh"]
