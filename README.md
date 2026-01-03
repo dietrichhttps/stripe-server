@@ -192,30 +192,30 @@ STRIPE_PUBLISHABLE_KEY_EUR=pk_test_51XyZaBcDeFgHiJkLmNoPqRsTuVwXz9876543210
 STRIPE_SECRET_KEY_EUR=sk_test_51XyZaBcDeFgHiJkLmNoPqRsTuVwXz9876543210
 ```
 
-### Важные замечания
-
-- ⚠️ **Никогда не коммитьте файл `.env` в Git!** Он уже добавлен в `.gitignore`
-- 🔑 Используйте **тестовые ключи** (начинаются с `pk_test_` и `sk_test_`) для разработки
-- 🌐 Для продакшена замените тестовые ключи на живые (начинаются с `pk_live_` и `sk_live_`)
-- 🔒 `SECRET_KEY` для Django можно сгенерировать командой: `python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`
-- 📝 Для локальной разработки значения по умолчанию подходят для большинства случаев
-
 ## Структура проекта
 
 ```
 stripe-server/
-├── store/              # Основное приложение
-│   ├── models.py      # Модели: Item, Order, Discount, Tax
-│   ├── views.py       # Views для API endpoints
-│   ├── admin.py       # Настройки Django Admin
-│   └── urls.py        # URL маршруты
-├── stripe_server/     # Настройки Django проекта
-│   ├── settings.py    # Настройки приложения
-│   └── urls.py        # Главный URL конфиг
-├── docker-compose.yml # Docker конфигурация
-├── Dockerfile         # Docker образ
-├── requirements.txt   # Python зависимости
-└── README.md          # Документация
+├── store/                    # Основное приложение
+│   ├── migrations/          # Миграции базы данных
+│   ├── models.py            # Модели: Item, Order, Discount, Tax
+│   ├── views.py             # Views для API endpoints
+│   ├── admin.py             # Настройки Django Admin
+│   ├── urls.py              # URL маршруты приложения
+│   └── ...
+├── stripe_server/           # Настройки Django проекта
+│   ├── settings.py          # Настройки приложения
+│   ├── urls.py              # Главный URL конфиг
+│   ├── wsgi.py              # WSGI конфигурация
+│   └── ...
+├── .env.example             # Пример файла переменных окружения
+├── .gitignore               # Git ignore правила
+├── docker-compose.yml       # Docker конфигурация
+├── Dockerfile               # Docker образ
+├── manage.py                # Django management скрипт
+├── nginx.conf               # Пример конфигурации Nginx
+├── requirements.txt         # Python зависимости
+└── README.md                # Документация
 ```
 
 ## Справочник переменных окружения
