@@ -3,13 +3,18 @@ version: '3.8'
 services:
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    restart: unless-stopped
     volumes:
-      - .:/app
       - ./db.sqlite3:/app/db.sqlite3
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"  # Только локальный доступ, Nginx будет проксировать
     env_file:
       - .env
     environment:
       - PYTHONUNBUFFERED=1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/admin/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
