@@ -74,11 +74,17 @@ python manage.py runserver
 docker-compose up --build
 ```
 
-3. Выполните миграции (в другом терминале):
+3. Выполните миграции и соберите статические файлы (в другом терминале):
 ```bash
 docker-compose exec web python manage.py migrate
+docker-compose exec web python manage.py collectstatic --noinput
 docker-compose exec web python manage.py createsuperuser
 ```
+
+**Примечание:** 
+- Статические файлы (CSS, JS для админ-панели) будут собраны в директорию `staticfiles/`
+- Для локальной разработки рекомендуется установить `DEBUG=True` в `.env` - Django автоматически будет обслуживать статические файлы
+- При `DEBUG=False` статические файлы нужно обслуживать через веб-сервер (Nginx) или использовать WhiteNoise
 
 Приложение будет доступно по адресу: http://localhost:8000
 
